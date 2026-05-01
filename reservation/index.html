@@ -1494,7 +1494,7 @@
                                             id="reservation-thanks"
                                             style="display: none; color: green"
                                         >
-                                            予約リクエストを受け付けました（デモ）
+                                            送信完了しました。ご予約ありがとうございます。（これはデモのため、実際には予約されません。）
                                         </p>
                                     </div>
                                 </div>
@@ -1609,5 +1609,31 @@
             src="../wp-content/themes/lightning/_g3/assets/js/main.js?ver=15.35.0"
             id="lightning-js-js"
         ></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const reserveForm = document.querySelector('#reservation-form');
+                const thanksMessage = document.querySelector(
+                    '#reservation-thanks',
+                );
+
+                if (reserveForm && thanksMessage) {
+                    reserveForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        thanksMessage.style.display = 'block';
+
+                        const submitButton =
+                            reserveForm.querySelector('.wpcf7-submit');
+                        if (submitButton) {
+                            submitButton.disabled = true;
+                            submitButton.style.opacity = '0.5';
+                            submitButton.style.cursor = 'not-allowed';
+                        }
+
+                        reserveForm.reset();
+                    });
+                }
+            });
+        </script>
     </body>
 </html>
